@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.wa</groupId>
+  <artifactId>webapp</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>webapp Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <distributionManagement>
+    <!--自己创建的库-->
+    <repository>
+      <id>myReposioryT</id><!--这里的id与角色中配置的id要一致-->
+      <name>my test reposiory</name>
+      <url>http://192.168.1.105:8081/nexus/content/repositories/myRepository</url>
+    </repository>
+    <!--snapshots库-->
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <name>Nexus Snapshot Repository</name>
+      <url>http://192.168.1.105:8081/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    <!--<repository>
+          <id>nexus-releases</id>
+          <name>Nexus Release Repository</name>
+          <url>http://127.0.0.1:8081/nexus/content/repositories/releases/</url>
+      </repository>
+     -->
+  </distributionManagement>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <!-- 命令行输入mvn时，默认执行mvn package  -->
+    <defaultGoal>package</defaultGoal>
+
+    <!-- 设定Web应用中编译结果输出到WEB-INF/classes 中,与使用Eclipse时相同  -->
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <plugins>
+      <!-- war插件, 设定webapp目录为/webapp -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <warSourceDirectory>${basedir}/src/main/webapps</warSourceDirectory>
+          <webXml>${basedir}/src/main/webapps/WEB-INF/web.xml</webXml>
+          <archiveClasses>false</archiveClasses>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
